@@ -5,7 +5,10 @@
     "module": "commonjs",
     "moduleResolution": "node",
     "esModuleInterop": true,
-    "lib": ["esnext"],
+    "lib": [
+        "esnext",
+        "dom"
+    ],
     "outDir": "./dist",
     "rootDir": "./src",
     "strict": true,
