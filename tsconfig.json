@@ -1,0 +1,14 @@
+{
+  "exclude": ["**/*.test.ts"],
+  "compilerOptions": {
+    "target": "es2015",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "lib": ["esnext"],
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "strict": true,
+    "declaration": true
+  }
+}
