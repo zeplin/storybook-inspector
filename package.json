@@ -6,6 +6,7 @@
   "scripts": {
     "lint": "eslint .",
     "bundle": "webpack",
+    "prebuild": "rm -rf dist",
     "build": "tsc",
     "install:husky": "husky install",
     "prepare": "npm-run-all install:husky build"

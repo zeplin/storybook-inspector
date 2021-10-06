@@ -1,0 +1,45 @@
+on:
+  release:
+    types:
+      - published
+
+name: Publish
+
+jobs:
+  publish:
+    name: Publish to Production
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Use Node.js 16.8.0
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16.8.0
+
+      - name: Install npm cache
+        uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Get version
+        run: echo VERSION=${GITHUB_REF#refs/tags/v} >> $GITHUB_ENV
+
+      - name: Set version
+        run: npm version $VERSION --no-git-tag-version
+
+      - name: Build package
+        run: npm run build
+
+      - name: Publish to npm
+        run: npm publish --access public --dry-run
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
