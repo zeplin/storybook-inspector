@@ -1,5 +1,12 @@
 /* eslint-disable */
 const path = require("path");
+const nodeExternals = require('webpack-node-externals');
+
+const externals = (
+  process.env.INCLUDE_NODE_MODULES?.toLowerCase() === "true"
+    ? undefined
+    : [nodeExternals()]
+);
 
 module.exports = {
     mode: "production",
@@ -17,25 +24,15 @@ module.exports = {
     module: {
         rules: [
             {
-                use: {
-                    loader:'babel-loader',
-                    options: {
-                        "presets": [
-                            [ "@babel/preset-env", { "targets": { "node": "current" } } ],
-                            "@babel/preset-typescript"
-                        ]
-                    }
-                },
-                test: /\.ts$/,
-                exclude: /node_modules/
+                test: /\.tsx?$/,
+                use: 'ts-loader',
+                exclude: /node_modules/,
             }
         ]
     },
+    externals,
     resolve: {
-        extensions: ['.tsx', '.ts'],
-    },
-    optimization:{
-        minimize: false
+        extensions: ['.tsx', '.ts', '.js', '.jsx'],
     },
     devtool: false
 };
