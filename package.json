@@ -5,9 +5,8 @@
   "main": "dist/index.js",
   "scripts": {
     "lint": "eslint .",
-    "bundle": "webpack",
     "prebuild": "rm -rf dist",
-    "build": "tsc",
+    "build": "webpack",
     "install:husky": "husky install",
     "prepare": "npm-run-all install:husky build",
     "deploy-to-appcenter": "appcenter distribute release"
