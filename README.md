@@ -1,2 +1,2 @@
-# storybook-inspector
-Utility functions to get storybook data for zeplin's client apps
+# Storybook Inspector
+Storybook utility functions for Zeplin's client apps
