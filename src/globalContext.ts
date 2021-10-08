@@ -43,7 +43,7 @@ export async function getGlobalContext(
         !("0" in windowObject) ||
         !("__STORYBOOK_CLIENT_API__" in windowObject[0])) {
         if (retryCount === 0) {
-            throw new Error("Timeout while extracting Storybook data");
+            throw new Error("Timeout while getting Storybook Client API");
         }
 
         await sleep(DEFAULT_SLEEP_DURATION);

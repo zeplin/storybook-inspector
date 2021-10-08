@@ -22,19 +22,33 @@ function extractZeplinLink(
 function getSnippet(
     storyContext: StoryContext,
     globalContext: GlobalContext
-): { code: string; lang: string; } | string | undefined {
+): { code: string; lang?: string; } | undefined {
     const code = getCodeSnippet(storyContext);
-    const lang = getCodeLanguage(storyContext, globalContext);
     if (!code) {
         return undefined;
     }
-    if (!lang) {
-        return code;
-    }
     return {
         code,
-        lang
+        lang: getCodeLanguage(storyContext, globalContext)
     };
+}
+
+/**
+ * Storybook shows the grouped components after ungrouped ones.
+ * This comparison helps to sort components and stories like in the UI.
+ * You can also check here about grouping and hierarchy.
+ * {@link https://storybook.js.org/docs/react/writing-stories/naming-components-and-hierarchy grouping and hierarchy on Storybook}
+ * @param left
+ * @param right
+ */
+function compareByGroupedOrNot(left: { kind: string; }, right: { kind: string; }): number {
+    if (left.kind.includes("/") && !right.kind.includes("/")) {
+        return 1;
+    }
+    if (right.kind.includes("/") && !left.kind.includes("/")) {
+        return -1;
+    }
+    return 0;
 }
 
 export interface StorySummary {
@@ -43,18 +57,19 @@ export interface StorySummary {
     name: string;
     zeplinSources: LinkProperties[];
 }
-export interface StoryDetail extends StorySummary{
+
+export interface StoryDetail extends StorySummary {
     componentName?: string;
     filePath?: string;
     framework: string;
     description?: string;
     snippet?: {
         code: string;
-        lang: string;
-    } | string
+        lang?: string;
+    }
 }
 
-export function getStories({ store, linkBases }: GlobalContext):StorySummary[] {
+export function getStories({ store, linkBases }: GlobalContext): StorySummary[] {
     return Object.keys(store.extract({ includeDocsOnly: false }))
         .map(key => store.fromId(key))
         .filter((value): value is PublishedStoreItem => Boolean(value))
@@ -70,15 +85,7 @@ export function getStories({ store, linkBases }: GlobalContext):StorySummary[] {
             kind,
             name,
             zeplinSources: extractZeplinLink(zeplinLink, linkBases)
-        })).sort((a, b) => {
-            if (a.kind.includes("/") && !b.kind.includes("/")) {
-                return 1;
-            }
-            if (b.kind.includes("/") && !a.kind.includes("/")) {
-                return -1;
-            }
-            return 0;
-        });
+        })).sort(compareByGroupedOrNot);
 }
 
 export function getStoryDetail(id: string, globalContext: GlobalContext): StoryDetail | undefined {
