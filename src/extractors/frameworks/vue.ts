@@ -169,6 +169,11 @@ export function getVueCodeSnippet(context: StoryContext): string | undefined {
     }).$mount();
 
     const storyNode = lookupStoryInstance(vm, storyComponent);
+
+    if (!storyNode) {
+        return;
+    }
+
     const code = vnodeToString(storyNode._vnode);
 
     return prettier.format(`<template>${code}</template>`, {
