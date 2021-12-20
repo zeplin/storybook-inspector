@@ -7,7 +7,10 @@ export function getStory(context: StoryContext, { useOriginal = false } = {}): u
         }
     } = context;
 
-    const storyFn = useOriginal ? context.getOriginal() : context.storyFn;
+    const storyFn = (useOriginal
+        ? context.getOriginal?.() || context.originalStoryFn
+        : context.storyFn
+    );
 
     return (
         passArgsFirst
