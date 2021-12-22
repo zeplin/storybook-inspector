@@ -7,7 +7,11 @@ export function getStory(context: StoryContext, { useOriginal = false } = {}): u
         }
     } = context;
 
-    const storyFn = useOriginal ? context.getOriginal() : context.storyFn;
+    // Storybook 6.4 doesn't have the getOriginal property. Use the originalStoryFn instead.
+    const storyFn = (useOriginal
+        ? context.getOriginal?.() || context.originalStoryFn
+        : context.storyFn
+    );
 
     return (
         passArgsFirst

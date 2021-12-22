@@ -52,7 +52,8 @@ export async function getGlobalContext(
 
     const {
         __STORYBOOK_CLIENT_API__: {
-            store
+            store,
+            storyStore
         },
         STORYBOOK_ENV,
         STORYBOOK_REACT_CLASSES = {},
@@ -60,24 +61,27 @@ export async function getGlobalContext(
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } = windowObject[0] as any;
 
+    // Storybook 6.4 doesn't have the store property. Use the storyStore instead.
+    const foundStore = store?.() || storyStore;
+
     switch (STORYBOOK_ENV) {
         case "react":
             return {
-                store: store(),
+                store: foundStore,
                 linkBases,
                 framework: STORYBOOK_ENV,
                 react: STORYBOOK_REACT_CLASSES
             };
         case "angular":
             return {
-                store: store(),
+                store: foundStore,
                 linkBases,
                 framework: STORYBOOK_ENV,
                 angular: __STORYBOOK_COMPODOC_JSON__
             };
         default:
             return {
-                store: store(),
+                store: foundStore,
                 linkBases,
                 framework: STORYBOOK_ENV
             };
