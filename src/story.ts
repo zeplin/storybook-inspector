@@ -71,6 +71,8 @@ export interface StoryDetail extends StorySummary {
 }
 
 export async function getStories({ store, linkBases }: GlobalContext): Promise<StorySummary[]> {
+    // `cacheAllCSFFiles` is added with Storybook v7
+    // To support older versions, we need to call with optional chaining.
     await store.cacheAllCSFFiles?.();
     return Object.keys(store.extract({ includeDocsOnly: false }))
         .map(key => store.fromId(key))
@@ -92,6 +94,10 @@ export async function getStories({ store, linkBases }: GlobalContext): Promise<S
 
 export function getStoryDetail(id: string, globalContext: GlobalContext): StoryDetail | undefined {
     const { store } = globalContext;
+
+    // The return type of `fromId` is changed with Storybook v7
+    // For older versions, `storyContext` is `boundStory`,
+    // For newer versions, we need to call `getStoryContext` to get context.
     const boundStory = store.fromId(id);
     const storyContext = (store.getStoryContext?.(boundStory) ?? boundStory) as StoryContext;
 
