@@ -1,5 +1,6 @@
 import { StoryStore } from "@storybook/client-api";
 import { LinkBases } from "./zeplinLink";
+import { AnyFramework } from "@storybook/csf";
 
 const DEFAULT_RETRY_COUNT = 120;
 const DEFAULT_SLEEP_DURATION = 500;
@@ -10,7 +11,7 @@ function sleep(duration: number): Promise<void> {
 
 export interface GlobalContext {
     framework: string;
-    store: StoryStore;
+    store: StoryStore<AnyFramework>;
     linkBases: LinkBases;
     react?: Record<string, {
         docgenInfo: {

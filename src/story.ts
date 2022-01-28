@@ -1,9 +1,10 @@
-import { PublishedStoreItem } from "@storybook/client-api";
+import { BoundStory } from "@storybook/client-api";
 import { StoryContext } from "@storybook/addons";
 
 import { LinkBases, LinkProperties, getZeplinLinkProperties } from "./zeplinLink";
 import { getCodeLanguage, getCodeSnippet, getComponentName, getFilePath } from "./extractors";
 import { GlobalContext } from "./globalContext";
+import { AnyFramework } from "@storybook/csf";
 
 function extractZeplinLink(
     zeplinLink: string | { link: string }[] | undefined,
@@ -69,10 +70,13 @@ export interface StoryDetail extends StorySummary {
     }
 }
 
-export function getStories({ store, linkBases }: GlobalContext): StorySummary[] {
+export async function getStories({ store, linkBases }: GlobalContext): Promise<StorySummary[]> {
+    // `cacheAllCSFFiles` is added with Storybook v7
+    // To support older versions, we need to call with optional chaining.
+    await store.cacheAllCSFFiles?.();
     return Object.keys(store.extract({ includeDocsOnly: false }))
         .map(key => store.fromId(key))
-        .filter((value): value is PublishedStoreItem => Boolean(value))
+        .filter((value): value is BoundStory<AnyFramework> => Boolean(value))
         .map(({
             id,
             kind,
@@ -89,7 +93,13 @@ export function getStories({ store, linkBases }: GlobalContext): StorySummary[] 
 }
 
 export function getStoryDetail(id: string, globalContext: GlobalContext): StoryDetail | undefined {
-    const storyContext = globalContext.store.fromId(id);
+    const { store } = globalContext;
+
+    // The return type of `fromId` is changed with Storybook v7
+    // For older versions, `storyContext` is `boundStory`,
+    // For newer versions, we need to call `getStoryContext` to get context.
+    const boundStory = store.fromId(id);
+    const storyContext = (store.getStoryContext?.(boundStory) ?? boundStory) as StoryContext;
 
     if (!storyContext || storyContext.parameters.docsOnly) {
         return undefined;
