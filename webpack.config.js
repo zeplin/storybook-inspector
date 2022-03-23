@@ -18,7 +18,7 @@ module.exports = {
         path: path.join(__dirname, "dist"),
         filename: "index.js",
         library: {
-            type: 'umd'
+            type: 'commonjs',
         }
     },
     module: {
