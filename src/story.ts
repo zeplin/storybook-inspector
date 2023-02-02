@@ -6,6 +6,12 @@ import { getCodeLanguage, getCodeSnippet, getComponentName, getFilePath } from "
 import { GlobalContext } from "./globalContext";
 import { AnyFramework } from "@storybook/csf";
 
+async function initializeContext({ store }: GlobalContext): Promise<void> {
+    // `cacheAllCSFFiles` is added with Storybook v7
+    // To support older versions, we need to call with optional chaining.
+    await store.cacheAllCSFFiles?.();
+}
+
 function extractZeplinLink(
     zeplinLink: string | { link: string }[] | undefined,
     linkBases: LinkBases
@@ -70,10 +76,11 @@ export interface StoryDetail extends StorySummary {
     }
 }
 
-export async function getStories({ store, linkBases }: GlobalContext): Promise<StorySummary[]> {
-    // `cacheAllCSFFiles` is added with Storybook v7
-    // To support older versions, we need to call with optional chaining.
-    await store.cacheAllCSFFiles?.();
+export async function getStories(globalContext: GlobalContext): Promise<StorySummary[]> {
+    await initializeContext(globalContext);
+
+    const { store, linkBases } = globalContext;
+
     return Object.keys(store.extract({ includeDocsOnly: false }))
         .map(key => store.fromId(key))
         .filter((value): value is BoundStory<AnyFramework> => Boolean(value))
@@ -92,7 +99,9 @@ export async function getStories({ store, linkBases }: GlobalContext): Promise<S
         })).sort(compareByGroupedOrNot);
 }
 
-export function getStoryDetail(id: string, globalContext: GlobalContext): StoryDetail | undefined {
+export async function getStoryDetail(id: string, globalContext: GlobalContext): Promise<StoryDetail | undefined> {
+    await initializeContext(globalContext);
+
     const { store } = globalContext;
 
     // The return type of `fromId` is changed with Storybook v7
