@@ -3,7 +3,9 @@
 
 import prettier from "prettier/standalone";
 import prettierHtml from "prettier/parser-html";
-import Vue from "vue";
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import Vue from "vue/dist/vue";
 import { StoryContext } from "@storybook/addons";
 import { getStory } from "../storyHelper";
 
