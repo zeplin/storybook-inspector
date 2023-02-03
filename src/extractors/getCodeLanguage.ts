@@ -2,7 +2,7 @@ import { StoryContext } from "@storybook/addons";
 import {
     getReactCodeLanguage,
     getAngularCodeLanguage,
-    getVueCodeLanguage,
+    // GetVueCodeLanguage,
     getSvelteCodeLanguage,
     getWebComponentsCodeLanguage
 } from "./frameworks";
@@ -12,8 +12,8 @@ const codeLanguageFunctionMapper = new Map<string, (c: StoryContext, gc: GlobalC
     ["angular", getAngularCodeLanguage],
     ["react", getReactCodeLanguage],
     ["svelte", getSvelteCodeLanguage],
-    ["web-components", getWebComponentsCodeLanguage],
-    ["vue", getVueCodeLanguage]
+    ["web-components", getWebComponentsCodeLanguage]
+    // ["vue", getVueCodeLanguage]
 ]);
 
 export function getCodeLanguage(context: StoryContext, globalContext: GlobalContext): string | undefined {
