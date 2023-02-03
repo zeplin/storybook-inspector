@@ -20,20 +20,22 @@
     "url": "https://github.com/zeplin/storybook-inspector/issues"
   },
   "homepage": "https://github.com/zeplin/storybook-inspector#readme",
+  "peerDependencies": {
+    "react": "^16.8.0 || ^17.0.0 || ^18.0.0",
+    "prettier": "^2.4.1",
+    "vue": "^2.6.14 || ^3.0.0"
+  },
   "dependencies": {
     "lit-html": "^2.0.0-rc.3",
-    "prettier": "^2.4.1",
-    "query-string": "^7.0.1",
-    "react": "^16.14.0",
-    "react-element-to-jsx-string": "^14.3.2",
-    "vue": "^2.6.14"
+    "react-element-to-jsx-string": "^15.0.0",
+    "query-string": "^7.0.1"
   },
   "devDependencies": {
-    "@storybook/addons": "^6.4.14",
-    "@storybook/client-api": "^6.4.14",
+    "@storybook/addons": "^6.5.16",
+    "@storybook/client-api": "^6.5.16",
     "@storybook/csf": "^0.0.2--canary.87bc651.0",
     "@types/prettier": "^2.4.1",
-    "@types/react": "^16.14.0",
+    "@types/react": "^18.0.27",
     "@typescript-eslint/eslint-plugin": "^4.32.0",
     "@typescript-eslint/parser": "^4.32.0",
     "@zeplin/eslint-config": "^2.3.2",
