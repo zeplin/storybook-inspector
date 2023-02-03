@@ -4,8 +4,8 @@ import {
     getAngularCodeSnippet,
     getReactCodeSnippet,
     getSvelteCodeSnippet,
-    getWebComponentsCodeSnippet,
-    getVueCodeSnippet
+    getWebComponentsCodeSnippet
+    // GetVueCodeSnippet
 } from "./frameworks";
 import { getStory } from "./storyHelper";
 
@@ -13,8 +13,8 @@ const codeSnippetMapper = new Map<string, (c: StoryContext) => string | undefine
     ["react", getReactCodeSnippet],
     ["angular", getAngularCodeSnippet],
     ["web-components", getWebComponentsCodeSnippet],
-    ["svelte", getSvelteCodeSnippet],
-    ["vue", getVueCodeSnippet]
+    ["svelte", getSvelteCodeSnippet]
+    // ["vue", getVueCodeSnippet]
 ]);
 
 export function getSnippetFromStoryFn(context: StoryContext): string | undefined {

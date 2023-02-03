@@ -2,15 +2,15 @@ import { StoryContext } from "@storybook/addons";
 import {
     getReactComponentName,
     getAngularComponentName,
-    getVueComponentName,
+    // GetVueComponentName,
     getSvelteComponentName
 } from "./frameworks";
 
 const componentNameFunctionMapper = new Map<string, (c: StoryContext) => string | undefined>([
     ["react", getReactComponentName],
     ["angular", getAngularComponentName],
-    ["svelte", getSvelteComponentName],
-    ["vue", getVueComponentName]
+    ["svelte", getSvelteComponentName]
+    // ["vue", getVueComponentName]
 ]);
 
 export function getComponentName(context: StoryContext): string | undefined {

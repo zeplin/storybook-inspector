@@ -41,8 +41,8 @@ export async function getGlobalContext(
 ): Promise<GlobalContext> {
     if (!windowObject ||
         !(windowObject instanceof Object) ||
-        !("0" in windowObject) ||
-        !("__STORYBOOK_CLIENT_API__" in windowObject[0])) {
+        !(typeof windowObject === "object" && "0" in windowObject) ||
+        !(windowObject[0] && typeof windowObject[0] === "object" && "__STORYBOOK_CLIENT_API__" in windowObject[0])) {
         if (retryCount === 0) {
             throw new Error("Timeout while getting Storybook Client API");
         }

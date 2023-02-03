@@ -1,5 +1,9 @@
 import { StoryContext } from "@storybook/addons";
-import { getReactFilePath, getAngularFilePath, getVueFilePath } from "./frameworks";
+import {
+    getReactFilePath,
+    getAngularFilePath
+    // GetVueFilePath
+} from "./frameworks";
 import { GlobalContext } from "../globalContext";
 
 function getStoryFilePath(context: StoryContext): string | undefined {
@@ -9,8 +13,8 @@ function getStoryFilePath(context: StoryContext): string | undefined {
 
 const filePathFunctionMapper = new Map<string, (c: StoryContext, gc: GlobalContext) => string | undefined>([
     ["react", getReactFilePath],
-    ["angular", getAngularFilePath],
-    ["vue", getVueFilePath]
+    ["angular", getAngularFilePath]
+    // ["vue", getVueFilePath]
 ]);
 
 export function getFilePath(context: StoryContext, globalContext: GlobalContext): string | undefined {
