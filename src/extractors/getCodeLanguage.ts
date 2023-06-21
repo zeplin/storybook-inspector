@@ -1,4 +1,4 @@
-import { StoryContext } from "@storybook/addons";
+import { StoryContext } from "@storybook/types";
 import {
     getReactCodeLanguage,
     getAngularCodeLanguage,
@@ -18,10 +18,10 @@ const codeLanguageFunctionMapper = new Map<string, (c: StoryContext, gc: GlobalC
 
 export function getCodeLanguage(context: StoryContext, globalContext: GlobalContext): string | undefined {
     const {
-        parameters: { framework }
+        parameters: { framework, renderer }
     } = context;
 
-    const codeLanguageFunction = codeLanguageFunctionMapper.get(framework);
+    const codeLanguageFunction = codeLanguageFunctionMapper.get(framework || renderer);
 
     return codeLanguageFunction?.(context, globalContext);
 }

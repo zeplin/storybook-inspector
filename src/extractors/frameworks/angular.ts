@@ -3,7 +3,7 @@
 
 import prettierHtml from "prettier/parser-html";
 import prettier from "prettier/standalone";
-import { StoryContext } from "@storybook/addons";
+import { StoryContext } from "@storybook/types";
 
 import { getStory } from "../storyHelper";
 import { GlobalContext } from "../../globalContext";

@@ -3,7 +3,7 @@
 
 import React from "react";
 import reactElementToJSXString from "react-element-to-jsx-string";
-import { StoryContext } from "@storybook/addons";
+import { StoryContext } from "@storybook/types";
 import { getStory } from "../storyHelper";
 import { GlobalContext } from "../../globalContext";
 

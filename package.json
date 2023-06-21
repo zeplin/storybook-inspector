@@ -7,6 +7,7 @@
     "lint": "eslint .",
     "prebuild": "rm -rf dist",
     "build": "webpack",
+    "watch": "webpack --watch",
     "install:husky": "husky install",
     "prepare": "npm-run-all install:husky build",
     "deploy-to-appcenter": "appcenter distribute release"
@@ -21,19 +22,19 @@
   },
   "homepage": "https://github.com/zeplin/storybook-inspector#readme",
   "peerDependencies": {
-    "react": "^16.8.0 || ^17.0.0 || ^18.0.0",
     "prettier": "^2.4.1",
+    "react": "^16.8.0 || ^17.0.0 || ^18.0.0",
     "vue": "^2.6.14 || ^3.0.0"
   },
   "dependencies": {
     "lit-html": "^2.0.0-rc.3",
-    "react-element-to-jsx-string": "^15.0.0",
-    "query-string": "^7.0.1"
+    "query-string": "^7.0.1",
+    "react-element-to-jsx-string": "^15.0.0"
   },
   "devDependencies": {
-    "@storybook/addons": "^6.5.16",
-    "@storybook/client-api": "^6.5.16",
-    "@storybook/csf": "^0.0.2--canary.87bc651.0",
+    "@storybook/addons": "^7.0.22",
+    "@storybook/client-api": "^7.0.22",
+    "@storybook/csf": "^0.1.1",
     "@types/prettier": "^2.4.1",
     "@types/react": "^18.0.27",
     "@typescript-eslint/eslint-plugin": "^4.32.0",
