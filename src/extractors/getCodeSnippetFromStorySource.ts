@@ -1,4 +1,4 @@
-import { StoryContext } from "@storybook/addons";
+import { StoryContext } from "@storybook/types";
 
 interface Location {
     startBody: {

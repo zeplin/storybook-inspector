@@ -1,4 +1,4 @@
-import { StoryContext } from "@storybook/addons";
+import { StoryContext } from "@storybook/types";
 
 import { getSnippetFromStoryFn } from "./getCodeSnippetFromStoryFn";
 import { getCodeSnippetFromStorySource } from "./getCodeSnippetFromStorySource";

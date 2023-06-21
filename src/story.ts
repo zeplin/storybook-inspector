@@ -1,5 +1,4 @@
-import { BoundStory } from "@storybook/client-api";
-import { StoryContext } from "@storybook/addons";
+import { StoryContext, BoundStory } from "@storybook/types";
 
 import { LinkBases, LinkProperties, getZeplinLinkProperties } from "./zeplinLink";
 import { getCodeLanguage, getCodeSnippet, getComponentName, getFilePath } from "./extractors";
@@ -69,6 +68,7 @@ export interface StoryDetail extends StorySummary {
     componentName?: string;
     filePath?: string;
     framework: string;
+    renderer: string;
     description?: string;
     snippet?: {
         code: string;
@@ -108,7 +108,7 @@ export async function getStoryDetail(id: string, globalContext: GlobalContext): 
     // For older versions, `storyContext` is `boundStory`,
     // For newer versions, we need to call `getStoryContext` to get context.
     const boundStory = store.fromId(id);
-    const storyContext = (store.getStoryContext?.(boundStory) ?? boundStory) as StoryContext;
+    const storyContext = (boundStory ? store.getStoryContext?.(boundStory) : boundStory) as StoryContext;
 
     if (!storyContext || storyContext.parameters.docsOnly) {
         return undefined;
@@ -128,6 +128,7 @@ export async function getStoryDetail(id: string, globalContext: GlobalContext): 
         componentName: getComponentName(storyContext) || undefined,
         filePath: getFilePath(storyContext, globalContext) || undefined,
         framework: parameters.framework,
+        renderer: parameters.renderer,
         description: parameters.docs?.extractComponentDescription?.(parameters.component) || undefined,
         snippet: getSnippet(storyContext, globalContext)
     };

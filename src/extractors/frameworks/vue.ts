@@ -4,7 +4,7 @@
 import prettier from "prettier/standalone";
 import prettierHtml from "prettier/parser-html";
 import Vue from "vue";
-import { StoryContext } from "@storybook/addons";
+import { StoryContext } from "@storybook/types";
 import { getStory } from "../storyHelper";
 
 function vnodeToString(vnode: any): string {

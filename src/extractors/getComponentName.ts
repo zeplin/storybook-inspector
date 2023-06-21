@@ -1,4 +1,4 @@
-import { StoryContext } from "@storybook/addons";
+import { StoryContext } from "@storybook/types";
 import {
     getReactComponentName,
     getAngularComponentName,
@@ -15,10 +15,10 @@ const componentNameFunctionMapper = new Map<string, (c: StoryContext) => string 
 
 export function getComponentName(context: StoryContext): string | undefined {
     const {
-        parameters: { framework }
+        parameters: { framework, renderer }
     } = context;
 
-    const componentNameFunction = componentNameFunctionMapper.get(framework);
+    const componentNameFunction = componentNameFunctionMapper.get(framework || renderer);
 
     return componentNameFunction?.(context);
 }

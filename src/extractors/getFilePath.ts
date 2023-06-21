@@ -1,4 +1,4 @@
-import { StoryContext } from "@storybook/addons";
+import { StoryContext } from "@storybook/types";
 import {
     getReactFilePath,
     getAngularFilePath
@@ -19,10 +19,10 @@ const filePathFunctionMapper = new Map<string, (c: StoryContext, gc: GlobalConte
 
 export function getFilePath(context: StoryContext, globalContext: GlobalContext): string | undefined {
     const {
-        parameters: { framework }
+        parameters: { framework, renderer }
     } = context;
 
-    const filePathFunction = filePathFunctionMapper.get(framework) || getStoryFilePath;
+    const filePathFunction = filePathFunctionMapper.get(framework || renderer) || getStoryFilePath;
 
     return filePathFunction(context, globalContext) || getStoryFilePath(context);
 }

@@ -1,7 +1,7 @@
 // Original file: https://github.com/storybookjs/storybook/blob/bea2e5c38e/addons/docs/src/frameworks/svelte/sourceDecorator.ts
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { StoryContext } from "@storybook/addons";
+import { StoryContext } from "@storybook/types";
 import { getStory } from "../storyHelper";
 
 /**

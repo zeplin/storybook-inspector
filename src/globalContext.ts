@@ -11,6 +11,7 @@ function sleep(duration: number): Promise<void> {
 
 export interface GlobalContext {
     framework: string;
+    renderer: string;
     store: StoryStore<AnyFramework>;
     linkBases: LinkBases;
     react?: Record<string, {
@@ -71,6 +72,7 @@ export async function getGlobalContext(
                 store: foundStore,
                 linkBases,
                 framework: STORYBOOK_ENV,
+                renderer: STORYBOOK_ENV,
                 react: STORYBOOK_REACT_CLASSES
             };
         case "angular":
@@ -78,13 +80,15 @@ export async function getGlobalContext(
                 store: foundStore,
                 linkBases,
                 framework: STORYBOOK_ENV,
+                renderer: STORYBOOK_ENV,
                 angular: __STORYBOOK_COMPODOC_JSON__
             };
         default:
             return {
                 store: foundStore,
                 linkBases,
-                framework: STORYBOOK_ENV
+                framework: STORYBOOK_ENV,
+                renderer: STORYBOOK_ENV
             };
     }
 }

@@ -1,4 +1,4 @@
-import { ArgsStoryFn, LegacyStoryFn, StoryContext } from "@storybook/addons";
+import { ArgsStoryFn, LegacyStoryFn, StoryContext } from "@storybook/types";
 
 export function getStory(context: StoryContext, { useOriginal = false } = {}): unknown {
     const {

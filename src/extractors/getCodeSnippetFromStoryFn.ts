@@ -1,4 +1,4 @@
-import { StoryContext } from "@storybook/addons";
+import { StoryContext } from "@storybook/types";
 
 import {
     getAngularCodeSnippet,
@@ -19,10 +19,10 @@ const codeSnippetMapper = new Map<string, (c: StoryContext) => string | undefine
 
 export function getSnippetFromStoryFn(context: StoryContext): string | undefined {
     const {
-        parameters: { framework }
+        parameters: { framework, renderer }
     } = context;
 
-    const snippetFunction = codeSnippetMapper.get(framework);
+    const snippetFunction = codeSnippetMapper.get(framework || renderer);
 
     const story = getStory(context);
 

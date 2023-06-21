@@ -1,7 +1,7 @@
 // Original file: https://github.com/storybookjs/storybook/blob/9a5dccde24/addons/docs/src/frameworks/web-components/sourceDecorator.ts
 
 import { render } from "lit-html";
-import { StoryContext } from "@storybook/addons";
+import { StoryContext } from "@storybook/types";
 import { getStory } from "../storyHelper";
 
 export function getWebComponentsCodeSnippet(context: StoryContext): string | undefined {
