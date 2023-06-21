@@ -15,7 +15,7 @@ export function getStory(context: StoryContext, { useOriginal = false } = {}): u
 
     return (
         passArgsFirst
-            ? (storyFn as ArgsStoryFn)(context.args, context)
+            ? (storyFn as ArgsStoryFn)(context.args || context.initialArgs || {}, context)
             : (storyFn as LegacyStoryFn)(context)
     );
 }
