@@ -23,10 +23,14 @@ function getComponentDecoratorMetadata(component: any) {
 }
 function getComponentPropsDecoratorMetadata(component: any) {
     const decoratorKey = "__prop__metadata__";
-    let propsDecorators: Record<string, any[]> =
-        Reflect &&
+
+    // Temporary fix for dealing with Angular properties
+    // Should be replaced by Angular's own reflection utils
+    const decoratorKey2 = "propDecorators";
+    let propsDecorators: Record<string, any[]> = (Reflect &&
         Reflect.getOwnPropertyDescriptor &&
-        (Reflect?.getOwnPropertyDescriptor?.(component, decoratorKey)?.value ?? component[decoratorKey]);
+        (Reflect?.getOwnPropertyDescriptor?.(component, decoratorKey)?.value ?? component[decoratorKey])
+    ) || component[decoratorKey2];
 
     const parent = Reflect && Reflect.getPrototypeOf && Reflect.getPrototypeOf(component);
 
@@ -77,7 +81,8 @@ function getComponentInputsOutputs(component: any): ComponentInputsOutputs {
     // Filters properties that have the same name as the one present in the @Component property
     return Object.entries(componentPropsMetadata).reduce<ComponentInputsOutputs>(
         (previousValue, [propertyName, [value]]) => {
-            if (value.ngMetadataName === "Input") {
+            const metadataName = value.ngMetadataName || value.type?.prototype?.ngMetadataName;
+            if (metadataName === "Input") {
                 const inputToAdd = {
                     propName: propertyName,
                     templateName: value.bindingPropertyName ?? propertyName
@@ -91,7 +96,7 @@ function getComponentInputsOutputs(component: any): ComponentInputsOutputs {
                     inputs: [...previousInputsFiltered, inputToAdd]
                 };
             }
-            if (value.ngMetadataName === "Output") {
+            if (metadataName === "Output") {
                 const outputToAdd = {
                     propName: propertyName,
                     templateName: value.bindingPropertyName ?? propertyName
@@ -230,12 +235,8 @@ export function getAngularCodeSnippet(context: StoryContext): string | undefined
         userDefinedTemplate
     } = getStory(context, { useOriginal: true }) as any;
 
-    const {
-        parameters: {
-            component,
-            argTypes
-        }
-    } = context;
+    const component = context.component || context.parameters?.component;
+    const argTypes = context.argTypes || context.parameters?.argTypes;
 
     if (component && !userDefinedTemplate) {
         const source = computesTemplateSourceFromComponent(component, props, argTypes);
