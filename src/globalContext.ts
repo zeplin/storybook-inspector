@@ -43,7 +43,9 @@ export async function getGlobalContext(
     if (!windowObject ||
         !(windowObject instanceof Object) ||
         !(typeof windowObject === "object" && "0" in windowObject) ||
-        !(windowObject[0] && typeof windowObject[0] === "object" && "__STORYBOOK_CLIENT_API__" in windowObject[0])) {
+        !(windowObject[0] && typeof windowObject[0] === "object" && (
+            "__STORYBOOK_CLIENT_API__" in windowObject[0] || "__STORYBOOK_PREVIEW__" in windowObject[0]
+        ))) {
         if (retryCount === 0) {
             throw new Error("Timeout while getting Storybook Client API");
         }
@@ -56,6 +58,12 @@ export async function getGlobalContext(
         __STORYBOOK_CLIENT_API__: {
             store,
             storyStore
+        } = {
+            store: undefined,
+            storyStore: undefined
+        },
+        __STORYBOOK_PREVIEW__: {
+            storyStoreValue
         },
         STORYBOOK_ENV,
         STORYBOOK_REACT_CLASSES = {},
@@ -64,7 +72,9 @@ export async function getGlobalContext(
     } = windowObject[0] as any;
 
     // Storybook 6.4 doesn't have the store property. Use the storyStore instead.
-    const foundStore = store?.() || storyStore;
+    // Storybook 8 doesn't have storyStore property. Use preview's storyStoreValue instead.
+    // TODO: update this to use preview api for storybook v9
+    const foundStore = store?.() || storyStore || storyStoreValue;
 
     switch (STORYBOOK_ENV) {
         case "react":
