@@ -1,6 +1,6 @@
 {
   "name": "@zeplin/storybook-inspector",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "description": "Utility functions to get storybook data for Zeplin's client apps",
   "main": "dist/index.js",
   "scripts": {
