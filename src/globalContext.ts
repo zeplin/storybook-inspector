@@ -1,4 +1,4 @@
-import { StoryStore } from "@storybook/client-api";
+import { StoryStore } from "@storybook/preview-api";
 import { LinkBases } from "./zeplinLink";
 import { AnyFramework } from "@storybook/csf";
 
