@@ -108,7 +108,7 @@ export async function getStoryDetail(id: string, globalContext: GlobalContext): 
     // For older versions, `storyContext` is `boundStory`,
     // For newer versions, we need to call `getStoryContext` to get context.
     const boundStory = store.fromId(id);
-    const storyContext = (boundStory ? store.getStoryContext?.(boundStory) : boundStory) as StoryContext;
+    const storyContext = (boundStory ? store.getStoryContext?.(boundStory) : boundStory) as StoryContext | null;
 
     if (!storyContext || storyContext.parameters.docsOnly) {
         return undefined;
